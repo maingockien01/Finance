@@ -78,3 +78,21 @@ def request_list_quote(user_id, cursor):
                     }
             list_quote.append(quote)
         return list_quote
+
+#Check username exists
+def check_username(username, cursor):
+    cursor.execute("SELECT * FROM user_info WHERE username = '"+username+"'")
+    row = cursor.fetchone()
+    if row == None:
+        return False
+    else: 
+        return True
+
+
+def register_user(username, password, cursor):
+    cursor.execute("INSERT INTO user_info (username,password) VALUES ('"+username+"', '"+password+"')")
+    cursor.execute("SELECT user_id FROM user_info WHERE username = '"+username+"'")
+    row = cursor.fetchone()
+    user_id = row[0]
+    cursor.execute("INSERT INTO user_porperty (user_id, cash) VALUES ("+str(user_id)+", 100000)")
+    

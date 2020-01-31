@@ -46,8 +46,10 @@ cursor = connectionDB.cursor()
 
 
 # API key for searching quote information 
+"""
 if not os.environ.get("API_KEY"):
     raise RuntimeError("API_KEY not set")
+    """
 
 
 @app.route("/")
@@ -93,6 +95,7 @@ def buy_post():
             transaction.commitBuy(user_id = session["user_id"], symbol = symbol, share = int(buy_share), price = float(price), cash = cash, cursor = cursor)
     return redirect("/")
 
+#This will beused to send JSON to front end (Ajax method) - finish this later
 @app.route("/check", methods=["GET"])
 def check():
     """Return true if username available, else false, in JSON format"""
@@ -154,14 +157,28 @@ def quote(chart):
         return render_template("quote.html",isSearch = True)
     else:
         quoteList = quote_request.get_quote_list(chart)
-        return render_template("quote.html", isSearch = False, quoteList = quoteList)
+        return render_template("quote.html", isSearch = False, quoteList = quoteList, user_name=session["user_name"])
 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    """Register user"""
-    return apology("TODO")
+    if request.method == "GET":
+        return render_template("register.html")
+    else:
+        print("POST")
+        username = request.form.get("username")
+        password = request.form.get("password")
+        print(username + "-" + password)
 
+        isUsernameExist = user_request.check_username(username, cursor)
+        print(isUsernameExist)
+        if isUsernameExist:
+            return apology("Username already exist!")
+        else:
+            user_request.register_user(username, password, cursor)
+
+
+        return redirect("/login")
 
 @app.route("/sell/<symbol>", methods=["GET"])
 @login_required
