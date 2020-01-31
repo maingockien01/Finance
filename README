@@ -1,0 +1,17 @@
+This project is my personal project!
+I have not finished yet as there are still many bus and many features need
+done. 
+
+Requirements:
+For Python
+flask
+flask_session
+requests
+
+For database:
+MySQL
+
+
+To be honest, I have known how to deploy this to some where else. I have been
+running this only local in my computer. DM if you know how to deploy this.
+Thank  you.
