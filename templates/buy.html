@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sell
+{% endblock %}
+
+{% block main %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Symbol</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope"col">Maximum shares</th>
+                <th scope="col">Shares</th>
+                <th scope="col">TOTAL</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <form action="/buy" method="post">
+            <tr>
+                <td><input type="hidden" name="symbol" value="{{quote["symbol"] }}">{{ quote["symbol"] }}</td>
+                <td>{{ quote["name"] }}</td>
+                <td><input type="hidden" name="price" value="{{ quote["price"] }}">{{ quote["price"] }}</td>
+                <td>{{ maximum_share }}</td>
+                <td><input type="number" id="buy_share" name="buy_share" min="1" max="{{ maximum_share }}" class="form-control is-valid" required></td>
+                <td>- <span id="total_buy">0</span></td>
+                <td><button type="submit" class="btn btn-outline-success">Buy</button></td>
+            </tr>
+            </form>
+            <tr>
+                <td>CASH</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td id="total_cash">{{ cash }}</td>
+                <td></td>
+            </tr>
+        </tbody>
+</table>
+
+    <script>
+        var price = {{ quote["price"] }};
+        var maximum_share = {{ maximum_share }}
+        
+        var buy_share = document.getElementById("buy_share");
+        var total_buy = document.getElementById("total_buy");
+        var total = document.getElementById("total_cash");
+
+        function inputListener() {
+            var total_buy_value = (price * buy_share.value).toFixed(2);
+            total_buy.innerHTML = total_buy_value;
+            total.innerHTML = {{ cash }} - total_buy_value;
+            
+        };
+
+        buy_share.addEventListener("input", inputListener);
+    </script>
+
+{% endblock %}

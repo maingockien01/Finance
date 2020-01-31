@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sell
+{% endblock %}
+
+{% block main %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Symbol</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Available shares</th>
+                <th scope="col">Shares</th>
+                <th scope="col">TOTAL</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <form action="/sell" method="post">
+                    <td><input type="hidden" name="symbol" value="{{ quote["symbol"] }}">{{ quote["symbol"] }}</td>
+                <td>{{ quote["name"] }}</td>
+                <td ><input type="hidden" name="price" value="{{ quote["price"] }}"> {{ quote["price"] }}</td>
+                <td>{{ available_share }}</td>
+                <td><input type="number" name="sell_share" min="1" max="{{ available_share }}" class="form-control is-valid" value=0 id="shareInput" required></td>
+                <td>+ <span id="totalSell">0</span></td>
+                <td><button type="submit" class="btn btn-outline-danger" >Sell</button></td>
+                </form>
+            </tr>
+            <tr>
+                <td>CASH</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td id="totalCashTd">{{ cash }}</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+
+        var cash = {{ cash }};
+        var price = {{ quote["price"] }};
+        var available_share = {{ available_share }};
+        var sharesInput = document.getElementById("shareInput");
+        var sellTotalTd = document.getElementById("totalSell");
+        var totalCashTd = document.getElementById("totalCashTd");
+        
+        function isSharesSellabe() {
+            if(sharesInput.value > available_share) sharesInput.value = available_share;
+            if(shareInput.value < 0) sharesInput.value = 1;
+            
+            sellTotalTd.innerHTML = (price * sharesInput.value).toFixed(2);
+            totalCashTd.innerHTML = (cash + price * sharesInput.value).toFixed(2);
+
+        };
+
+        sharesInput.addEventListener("input",isSharesSellabe);
+
+
+    </script>
+
+{% endblock %}

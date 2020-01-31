@@ -1,0 +1,4 @@
+CREATE TABLE user_info (username VARCHAR(20) NOT NULL, password varchar(255) NOT NULL, user_id int NOT NULL AUTO_INCREMENT, PRIMARy KEY (user_id));
+CREATE TABLE user_porperty (user_id int NOT NULL, cash int, FOREIGN KEY (user_id) REFERENCES user_info(user_id));
+CREATE TABLE user_stock (user_id int, symbol varchar(255), share int, FOREIGN KEY (user_id) REFERENCES user_info(user_id));
+
