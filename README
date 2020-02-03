@@ -12,6 +12,9 @@ For database:
 MySQL
 
 
-To be honest, I have known how to deploy this to some where else. I have been
-running this only local in my computer. DM if you know how to deploy this.
-Thank  you.
+How to run this website in AWS:
+type those command into bash:
+$ source my_env/bin/activate
+$ cd finance
+$ export FLASK_APP=application.py
+$ flask run 
