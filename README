@@ -1,16 +1,12 @@
-This project is my personal project!
-I have not finished yet as there are still many bus and many features need
-done. 
+This project is my personal project from course CS50: Introduciton to CS - Havard online studying
 
-Requirements:
-For Python
-flask
-flask_session
-requests
+This is a basic website that stimulate investing game. The front end have ajax to spontaneously update price. By interacting, the user will buy stocks and resell to gain profits.
 
-For database:
-MySQL
-
+Technology:
+- Flask
+- Python
+- Bootstrap
+- MySQL
 
 How to run this website in AWS:
 type those command into bash:
